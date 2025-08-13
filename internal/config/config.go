@@ -1,7 +1,7 @@
 package config
 
 import (
-	"link_service/pkg/logger"
+	"log"
 	"sync"
 
 	"github.com/ilyakaznacheev/cleanenv"
@@ -9,24 +9,24 @@ import (
 
 type Config struct {
 	Addr      string
-	BindIP    string `env:"BIND_IP" env-default:"127.0.0.1"`
-	Port      string `env:"LISTEN_PORT" env-default:"8080"`
-	FileTypes string `env:"FILE_TYPES" env-default:"image/jpeg,application/pdf"`
+	BindIP    string `env:"BIND_IP"`
+	Port      string `env:"LISTEN_PORT"`
+	FileTypes string `env:"FILE_TYPES"`
 }
 
 var instance *Config
 var once sync.Once
 
-func GetConfig(logger *logger.Logger) *Config {
+func GetConfig() *Config {
 
 	once.Do(func() {
-		// logger.Infoln("reading app configuration")
+		log.Println("reading app configuration")
 		instance = &Config{}
 		err := cleanenv.ReadConfig(".env", instance)
 		if err != nil {
-			// logger.Infoln("read app configuration error, using default settings")
+			log.Fatalln("read app configuration error")
 		} else {
-			// logger.Infoln("config OK")
+			log.Println("config OK")
 		}
 		instance.Addr = instance.BindIP + ":" + instance.Port
 	})

@@ -3,7 +3,6 @@ package db
 import (
 	"fmt"
 	"link_service/internal/model"
-	"link_service/pkg/logger"
 )
 
 const (
@@ -11,14 +10,12 @@ const (
 )
 
 type database struct {
-	logger *logger.Logger
-	db     map[int]model.Task
+	db map[int]model.Task
 }
 
-func NewStorage(logger *logger.Logger) Storage {
+func NewStorage() Storage {
 	return &database{
-		logger: logger,
-		db:     make(map[int]model.Task, 0),
+		db: make(map[int]model.Task, 0),
 	}
 }
 

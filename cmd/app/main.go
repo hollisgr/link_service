@@ -5,21 +5,19 @@ import (
 	"link_service/internal/db"
 	"link_service/internal/handler"
 	"link_service/internal/link_service"
-	"link_service/pkg/logger"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	logger := logger.GetLogger()
 
 	router := gin.Default()
 
-	config := config.GetConfig(logger)
+	config := config.GetConfig()
 
-	storage := db.NewStorage(logger)
+	storage := db.NewStorage()
 
-	linkService := link_service.NewService(config, storage, logger)
+	linkService := link_service.NewService(config, storage)
 
 	handler := handler.NewHandler(router, linkService, config)
 	handler.Register()

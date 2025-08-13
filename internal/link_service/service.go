@@ -6,7 +6,6 @@ import (
 	"link_service/internal/config"
 	"link_service/internal/db"
 	"link_service/internal/model"
-	"link_service/pkg/logger"
 	"strings"
 )
 
@@ -16,15 +15,13 @@ const (
 )
 
 type linkService struct {
-	logger  *logger.Logger
 	storage db.Storage
 	config  *config.Config
 }
 
-func NewService(config *config.Config, storage db.Storage, logger *logger.Logger) LinkServiceInterface {
+func NewService(config *config.Config, storage db.Storage) LinkServiceInterface {
 	return &linkService{
 		config:  config,
-		logger:  logger,
 		storage: storage,
 	}
 }
